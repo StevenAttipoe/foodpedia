@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:splashscreen/splashscreen.dart';
 import 'package:foodpedia/view/login.dart';
+import 'package:foodpedia/view/nav/home.dart';
+
 
 class Splash extends StatefulWidget {
   @override
@@ -20,7 +22,7 @@ class _SplashState extends State<Splash> {
     Navigator.pushReplacement(
       context, 
       MaterialPageRoute(
-        builder: (context)=>Login()));
+        builder: (context)=>Home()));
   }
 
   @override
