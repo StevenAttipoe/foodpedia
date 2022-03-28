@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:foodpedia/view/subpages/menu.dart';
+import 'package:foodpedia/view/subpages/restaurant.dart';
+import 'package:foodpedia/view/widgets/restaurant_card.dart';
 
 
 class Feed extends StatefulWidget {
@@ -41,7 +43,7 @@ class _FeedState extends State<Feed> {
                     height: MediaQuery.of(context).size.height * 0.25,
                     decoration: const BoxDecoration(
                         color: Colors.white,
-                        borderRadius: const BorderRadius.all(Radius.circular(20))),
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
                     child: Image.asset(
                       'assets/img/burger.png',
                       width:56,
@@ -69,8 +71,8 @@ class _FeedState extends State<Feed> {
                                 fontSize: 15, fontWeight: FontWeight.bold),
                           ),
                           onPressed: () {
-                            // Navigator.pushReplacement(
-                            // context, MaterialPageRoute(builder: (context) => SignUp()));
+                            Navigator.push(
+                            context, MaterialPageRoute(builder: (context) => const Restaurants()));
                           },
                           child: const Text('See all'),
                         )
@@ -114,8 +116,8 @@ class _FeedState extends State<Feed> {
                                 fontSize: 15, fontWeight: FontWeight.bold),
                           ),
                           onPressed: () {
-                            // Navigator.pushReplacement(
-                            // context, MaterialPageRoute(builder: (context) => SignUp()));
+                            Navigator.push(
+                            context, MaterialPageRoute(builder: (context) => const Menu()));
                           },
                           child: const Text('See all'),
                         )
@@ -184,49 +186,49 @@ class _FeedState extends State<Feed> {
     );
   }
 
-  Widget restaurantCard(String name, double rating) {
-    return Container(
-      width: MediaQuery.of(context).size.width * .35,
-      height: MediaQuery.of(context).size.height * .20,
-      margin: const EdgeInsets.only(right: 15.0),
-      decoration: 
-        const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(15))
-        ),
-      child: Column(
-        children: [
-          const SizedBox(height: 15,),
-          Image.asset(
-                  'assets/img/shop.png',
-                  width:80,
-                  height:80,),
-          Text(
-            name,
-            style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-            )
-          ),
+  // Widget restaurantCard(String name, double rating) {
+  //   return Container(
+  //     width: MediaQuery.of(context).size.width * .35,
+  //     height: MediaQuery.of(context).size.height * .20,
+  //     margin: const EdgeInsets.only(right: 15.0),
+  //     decoration: 
+  //       const BoxDecoration(
+  //         color: Colors.white,
+  //         borderRadius: BorderRadius.all(Radius.circular(15))
+  //       ),
+  //     child: Column(
+  //       children: [
+  //         const SizedBox(height: 15,),
+  //         Image.asset(
+  //                 'assets/img/shop.png',
+  //                 width:80,
+  //                 height:80,),
+  //         Text(
+  //           name,
+  //           style: const TextStyle(
+  //               fontSize: 20,
+  //               fontWeight: FontWeight.bold,
+  //           )
+  //         ),
 
-          RatingBar.builder(
-            initialRating: rating,
-            minRating: 1,
-            direction: Axis.horizontal,
-            allowHalfRating: true,
-            itemCount: 5,
-            itemSize: 25,
-            itemPadding: const EdgeInsets.symmetric(horizontal: 1.0),
-            itemBuilder: (context, _) =>  const Icon(
-              Icons.star,
-              color: Colors.amber,
-            ),
-            onRatingUpdate: (rating) {
-              print(rating);
-            },
-          )
-        ],
-      ),
-    );
-  }
+  //         RatingBar.builder(
+  //           initialRating: rating,
+  //           minRating: 1,
+  //           direction: Axis.horizontal,
+  //           allowHalfRating: true,
+  //           itemCount: 5,
+  //           itemSize: 25,
+  //           itemPadding: const EdgeInsets.symmetric(horizontal: 1.0),
+  //           itemBuilder: (context, _) =>  const Icon(
+  //             Icons.star,
+  //             color: Colors.amber,
+  //           ),
+  //           onRatingUpdate: (rating) {
+  //             print(rating);
+  //           },
+  //         )
+  //       ],
+  //     ),
+  //   );
+  // }
 }

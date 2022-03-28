@@ -18,22 +18,23 @@ class _SplashState extends State<Splash> {
   }
 
   _navigateToLogin() async {
-    await Future.delayed(Duration(seconds: 2), () {});
+    await Future.delayed(const Duration(seconds: 2), () {});
     Navigator.pushReplacement(
       context, 
       MaterialPageRoute(
-        builder: (context)=>Home()));
+        builder: (context)=> const Home()));
   }
 
   @override
   Widget build(BuildContext context) {
-    return 
-      new SplashScreen(
-        seconds: 10,
-        image: new Image.asset('assets/icons/foodpedia.png'),
-        backgroundColor: Colors.white,
-        photoSize: 150.0,
-        loaderColor: Colors.black,);
+    return Scaffold(
+         body: SplashScreen(
+          seconds: 10,
+          image:  Image.asset('assets/icons/foodpedia.png'),
+          backgroundColor: Colors.white,
+          photoSize: 150.0,
+          loaderColor: Colors.black,),
+       );
     
   }
 }

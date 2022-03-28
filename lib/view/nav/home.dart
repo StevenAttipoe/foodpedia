@@ -12,9 +12,13 @@ class Home extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Foodpedia',
-      home: MyHomePage(),
+    return const Scaffold(
+      body: SafeArea(
+        top: false,
+        bottom: false,
+        minimum: EdgeInsets.zero,
+        child: MyHomePage()
+      ),
     );
   }
 }
