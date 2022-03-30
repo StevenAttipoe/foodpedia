@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foodpedia/view/widgets/restaurant_card.dart';
+import 'package:foodpedia/view/widgets/search_bar.dart';
 
 class Restaurants extends StatefulWidget {
   const Restaurants({Key? key}) : super(key: key);
@@ -27,26 +28,7 @@ class _RestaurantsState extends State<Restaurants> {
                   const Text("Popular Restaurant"),
                 ],
               ),
-              Row(
-                children: [
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.search),
-                  ),
-                  const Flexible(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-                      child: Expanded(
-                        child: TextField(
-                            decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          hintText: 'Search',
-                        )),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+              SearchBar(),
               Table(children: <TableRow>[
                   TableRow(children: <Widget>[
                     TableCell(
