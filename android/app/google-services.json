@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "1022198465735",
+    "project_id": "foodpedia-160b5",
+    "storage_bucket": "foodpedia-160b5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1022198465735:android:9fc0c8f0110d95dafbeae2",
+        "android_client_info": {
+          "package_name": "com.sea.foodpedia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1022198465735-gmhmtvmdbefp0c5gf6c2ass8tdnqlla4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqbtea_PQRzBRA62SzsGQf0U-ykReKjJs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1022198465735-gmhmtvmdbefp0c5gf6c2ass8tdnqlla4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1022198465735-0j35f1qruge0jlm817ajiigli0dea24b.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.sea.foodpedia"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

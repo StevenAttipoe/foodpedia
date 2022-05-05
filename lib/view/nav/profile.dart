@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:foodpedia/view/login.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({ Key? key }) : super(key: key);
@@ -22,25 +24,36 @@ class _ProfilePageState extends State<ProfilePage> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                      CircleAvatar(
+                      const CircleAvatar(
                         backgroundImage: AssetImage('assets/icons/foodpedia.png'),
                         radius: 50.0,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10.0,
                       ),
-                      Text(
+                      const Text(
                         "Morgan",
                         style: TextStyle(
                           fontSize: 22.0,
                           color: Colors.black,
                         ),
                       ),                     
-                      Text(
+                      const Text(
                         "I don't regret using Steven's services!",
                         style: TextStyle(
                           fontSize: 18.0,
                           color: Colors.black,
+                        ),
+                      ),
+                      ElevatedButton(
+                        onPressed: () async {
+                          await FirebaseAuth.instance.signOut();
+                          Navigator.pushReplacement(context,
+                              MaterialPageRoute(builder: (context) => const Login()));
+                        },
+                        child: const Text('Sign Out'),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.black,
                         ),
                       ),
                     ]
