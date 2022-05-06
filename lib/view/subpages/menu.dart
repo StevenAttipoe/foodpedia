@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:foodpedia/view/widgets/search_bar.dart';
 
@@ -10,202 +11,96 @@ class Menu extends StatefulWidget {
 }
 
 class _MenuState extends State<Menu> {
+  var _feed = FirebaseFirestore.instance;
+  late List menuData = [];
+  late QuerySnapshot querySnapshot;
+  String searchString = "";
+
+  @override
+  void initState() {
+    super.initState();
+    getMenuData();
+  }
+
+  void dispose() {
+    super.dispose();
+  }
+
+   Future<void> getMenuData() async {
+    querySnapshot = await _feed.collection('menus').get();
+
+    setState(() {
+      menuData = querySnapshot.docs.map((doc) => doc.data()).toList();
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
    return Scaffold(
+        appBar: AppBar(
+          iconTheme: const IconThemeData(
+            color: Color(0xff99879D),
+          ),
+          backgroundColor: Colors.white,
+          title: const Text(
+            "Back",
+            style: TextStyle(color: Colors.black),
+          ),
+          elevation: 0,
+        ),
           body: SafeArea(
             child: SingleChildScrollView(
               child: Container(
                 child: Column(
                   children: [
-                    Row(
-                      children: [
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: const Icon(Icons.arrow_back_ios, size: 30),
+                    Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                          child: TextField(
+                            onChanged: (value) {
+                              setState(() {
+                                searchString = value.toLowerCase();
+                              });
+                            },
+                              decoration: const InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                                ),
+                                hintText: 'Search',
+                                suffixIcon: Icon(Icons.search,size: 37),
+                          )
                         ),
-                        const Text("Popular Menu"),
-                      ],
                     ),
-                   SearchBar(),
-                   ListTile(
-                    leading: 
-                      Image.network(
-                        'https://www.seekapor.com/wp-content/uploads/2018/08/Konbini.com_.png',
-                        width:56,
-                        height:56,
-                      ),
-                    title: Text('Jollof Rice'),
-                    subtitle: Text('Local Ghanaian Jollof Rice'),
-                    trailing:  Text('Ghc20.00'),
-                  ),
-                  ListTile(
-                    leading: 
-                      Image.network(
-                        'https://eatwellabi.com/wp-content/uploads/2021/09/Waakye-13-720x538.jpg',
-                        width:56,
-                        height:56,
-                      ),
-                    title: Text('Waakye'),
-                    subtitle: Text('Hot fast foor for the morning'),
-                    trailing:  Text('Ghc25.00'),
-                  ),
-                  ListTile(
-                    leading: 
-                      Image.network(
-                        'https://img-global.cpcdn.com/recipes/5da646cc1c73a947/1200x630cq70/photo.jpg',
-                        width:56,
-                        height:56,
-                      ),
-                    title: Text('Fried Rice'),
-                    subtitle: Text('Hot local Ghanaian fried you just need to have an awesome day!'),
-                    trailing:  Text('Ghc25.00'),
-                  ),
-                  ListTile(
-                    leading: 
-                      Image.network(
-                        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSybQ7SfSQ8V5RCY_eTVz6M0yONf1AZUKbbuA&usqp=CAU',
-                        width:56,
-                        height:56,
-                      ),
-                    title: Text('Assorted Rice'),
-                    subtitle: Text(' Ghanaian Assorted Rice you need to try!'),
-                    trailing:  Text('Gh30.00'),
-                  ),
-                  ListTile(
-                    leading: 
-                      Image.network(
-                        'https://www.seekapor.com/wp-content/uploads/2018/08/Konbini.com_.png',
-                        width:56,
-                        height:56,
-                      ),
-                    title: Text('Jollof Rice'),
-                    subtitle: Text('Local Ghanaian Jollof Rice'),
-                    trailing:  Text('Ghc20.00'),
-                  ),
-                  ListTile(
-                    leading: 
-                      Image.network(
-                        'https://eatwellabi.com/wp-content/uploads/2021/09/Waakye-13-720x538.jpg',
-                        width:56,
-                        height:56,
-                      ),
-                    title: Text('Waakye'),
-                    subtitle: Text('Hot fast foor for the morning'),
-                    trailing:  Text('Ghc25.00'),
-                  ),
-                  ListTile(
-                    leading: 
-                      Image.network(
-                        'https://img-global.cpcdn.com/recipes/5da646cc1c73a947/1200x630cq70/photo.jpg',
-                        width:56,
-                        height:56,
-                      ),
-                    title: Text('Fried Rice'),
-                    subtitle: Text('Hot local Ghanaian fried you just need to have an awesome day!'),
-                    trailing:  Text('Ghc25.00'),
-                  ),
-                  ListTile(
-                    leading: 
-                      Image.network(
-                        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSybQ7SfSQ8V5RCY_eTVz6M0yONf1AZUKbbuA&usqp=CAU',
-                        width:56,
-                        height:56,
-                      ),
-                    title: Text('Assorted Rice'),
-                    subtitle: Text(' Ghanaian Assorted Rice you need to try!'),
-                    trailing:  Text('Gh30.00'),
-                  ),
-                                   ListTile(
-                    leading: 
-                      Image.network(
-                        'https://www.seekapor.com/wp-content/uploads/2018/08/Konbini.com_.png',
-                        width:56,
-                        height:56,
-                      ),
-                    title: Text('Jollof Rice'),
-                    subtitle: Text('Local Ghanaian Jollof Rice'),
-                    trailing:  Text('Ghc20.00'),
-                  ),
-                  ListTile(
-                    leading: 
-                      Image.network(
-                        'https://eatwellabi.com/wp-content/uploads/2021/09/Waakye-13-720x538.jpg',
-                        width:56,
-                        height:56,
-                      ),
-                    title: Text('Waakye'),
-                    subtitle: Text('Hot fast foor for the morning'),
-                    trailing:  Text('Ghc25.00'),
-                  ),
-                  ListTile(
-                    leading: 
-                      Image.network(
-                        'https://img-global.cpcdn.com/recipes/5da646cc1c73a947/1200x630cq70/photo.jpg',
-                        width:56,
-                        height:56,
-                      ),
-                    title: Text('Fried Rice'),
-                    subtitle: Text('Hot local Ghanaian fried you just need to have an awesome day!'),
-                    trailing:  Text('Ghc25.00'),
-                  ),
-                  ListTile(
-                    leading: 
-                      Image.network(
-                        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSybQ7SfSQ8V5RCY_eTVz6M0yONf1AZUKbbuA&usqp=CAU',
-                        width:56,
-                        height:56,
-                      ),
-                    title: Text('Assorted Rice'),
-                    subtitle: Text(' Ghanaian Assorted Rice you need to try!'),
-                    trailing:  Text('Gh30.00'),
-                  ),
-                  ListTile(
-                    leading: 
-                      Image.network(
-                        'https://www.seekapor.com/wp-content/uploads/2018/08/Konbini.com_.png',
-                        width:56,
-                        height:56,
-                      ),
-                    title: Text('Jollof Rice'),
-                    subtitle: Text('Local Ghanaian Jollof Rice'),
-                    trailing:  Text('Ghc20.00'),
-                  ),
-                  ListTile(
-                    leading: 
-                      Image.network(
-                        'https://eatwellabi.com/wp-content/uploads/2021/09/Waakye-13-720x538.jpg',
-                        width:56,
-                        height:56,
-                      ),
-                    title: Text('Waakye'),
-                    subtitle: Text('Hot fast foor for the morning'),
-                    trailing:  Text('Ghc25.00'),
-                  ),
-                  ListTile(
-                    leading: 
-                      Image.network(
-                        'https://img-global.cpcdn.com/recipes/5da646cc1c73a947/1200x630cq70/photo.jpg',
-                        width:56,
-                        height:56,
-                      ),
-                    title: Text('Fried Rice'),
-                    subtitle: Text('Hot local Ghanaian fried you just need to have an awesome day!'),
-                    trailing:  Text('Ghc25.00'),
-                  ),
-                  ListTile(
-                    leading: 
-                      Image.network(
-                        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSybQ7SfSQ8V5RCY_eTVz6M0yONf1AZUKbbuA&usqp=CAU',
-                        width:56,
-                        height:56,
-                      ),
-                    title: Text('Assorted Rice'),
-                    subtitle: Text(' Ghanaian Assorted Rice you need to try!'),
-                    trailing:  Text('Gh30.00'),
-                  ),
+                   (menuData.isEmpty)
+                        ? const Padding(
+                            padding: EdgeInsets.only(top: 40.0),
+                            child: Text("No Menu Available"),
+                          )
+                        : 
+                    ListView.builder(
+                        physics: NeverScrollableScrollPhysics(),
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        itemCount: menuData.length,
+                        itemBuilder: (context, index) {
+                          return menuData[index]['name']
+                            .toLowerCase()
+                            .contains(searchString)
+                          ? ListTile(
+                            leading: Container(
+                              child: Image.network(
+                                menuData[index]['image'],
+                                width: 56,
+                                height: 56,
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                            title: Text(menuData[index]['name']),
+                            subtitle:
+                                Text(menuData[index]['description']),
+                            trailing: Text(menuData[index]['price']),
+                          ): Text("");
+                        }),
                   ],
                 ),
               ),

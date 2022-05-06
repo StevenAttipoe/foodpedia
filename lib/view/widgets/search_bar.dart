@@ -17,7 +17,6 @@ class _SearchBarState extends State<SearchBar> {
   @override
   void initState() {
     super.initState();
-    shows = fetchShows();
   }
 
   @override
@@ -43,61 +42,7 @@ class _SearchBarState extends State<SearchBar> {
            ),
           ),
         ),
-        Flexible(
-          child: FutureBuilder(
-            builder: (context, AsyncSnapshot<List<Show>> snapshot) {
-              if (snapshot.hasData) {
-                return Center(
-                  child: ListView.separated(
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    padding: const EdgeInsets.all(8),
-                    itemCount: snapshot.data!.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return snapshot.data![index].title
-                              .toLowerCase()
-                              .contains(searchString)
-                          ? ListTile(
-                              leading: CircleAvatar(
-                              backgroundImage: NetworkImage(
-                                    '${snapshot.data?[index].imageUrl}'),
-                              ),
-                              title: Text('${snapshot.data?[index].title}'),
-                              subtitle: Text(
-                                  'Score: ${snapshot.data?[index].score}'),
-                            )
-                          : Container();
-                    },
-                    separatorBuilder: (BuildContext context, int index) {
-                      return snapshot.data![index].title
-                              .toLowerCase()
-                              .contains(searchString)
-                          ? Divider()
-                          : Container();
-                    },
-                  ),
-                );
-              } else if (snapshot.hasError) {
-                return Center(child: Text('Something went wrong :('));
-              }
-              return CircularProgressIndicator();
-            },
-            future: shows,
-          ),
-        ),
         ]
     );
-  }
-}
-
-Future<List<Show>> fetchShows() async {
-  final response =
-      await http.get(Uri.parse('https://api.jikan.moe/v3/top/anime/1'));
-
-  if (response.statusCode == 200) {
-    var topShowsJson = jsonDecode(response.body)['top'] as List;
-    return topShowsJson.map((show) => Show.fromJson(show)).toList();
-  } else {
-    throw Exception('Failed to load shows');
   }
 }

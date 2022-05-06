@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 
-
-Widget restaurantCard(String name, double rating) {
+Widget restaurantCard(String name, String rating,String imageURL) {
     return Builder(
       builder: (context) {
         return Container(
@@ -18,8 +17,8 @@ Widget restaurantCard(String name, double rating) {
           child: Column(
             children: [
               const SizedBox(height: 15,),
-              Image.asset(
-                      'assets/img/shop.png',
+              Image.network(
+                      imageURL,
                       width:80,
                       height:80,),
               Text(
@@ -31,7 +30,7 @@ Widget restaurantCard(String name, double rating) {
               ),
 
               RatingBar.builder(
-                initialRating: rating,
+                initialRating: double.parse(rating),
                 minRating: 1,
                 direction: Axis.horizontal,
                 allowHalfRating: true,

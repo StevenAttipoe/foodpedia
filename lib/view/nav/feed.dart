@@ -1,8 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:foodpedia/view/subpages/menu.dart';
 import 'package:foodpedia/view/subpages/restaurant.dart';
 import 'package:foodpedia/view/widgets/restaurant_card.dart';
-
 
 class Feed extends StatefulWidget {
   const Feed({Key? key}) : super(key: key);
@@ -12,6 +13,54 @@ class Feed extends StatefulWidget {
 }
 
 class _FeedState extends State<Feed> {
+  var _feed = FirebaseFirestore.instance;
+
+  String uid = FirebaseAuth.instance.currentUser!.uid.toString();
+  late List userData = [];
+  late List menuData = [];
+  late List restaurantData = [];
+  late QuerySnapshot querySnapshot;
+
+  @override
+  void initState() {
+    super.initState();
+    getUserName();
+    getMenuData();
+    getRestaurantData();
+  }
+
+  void dispose() {
+    setState(() {
+      userData = [];
+    });
+    super.dispose();
+  }
+
+  Future<void> getUserName() async {
+    querySnapshot =
+        await _feed.collection('users').doc(uid).collection('info').get();
+
+    setState(() {
+      userData = querySnapshot.docs.map((doc) => doc.data()).toList();
+    });
+  }
+
+  Future<void> getMenuData() async {
+    querySnapshot = await _feed.collection('menus').get();
+
+    setState(() {
+      menuData = querySnapshot.docs.map((doc) => doc.data()).toList();
+    });
+  }
+
+  Future<void> getRestaurantData() async {
+    querySnapshot = await _feed.collection('restaurants').get();
+
+    setState(() {
+      restaurantData = querySnapshot.docs.map((doc) => doc.data()).toList();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,32 +73,34 @@ class _FeedState extends State<Feed> {
                 padding: const EdgeInsets.fromLTRB(5, 30, 5, 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: const [
-                    Icon(Icons.fastfood, size: 30),
-                    Text("Hello, Steven!",
-                        style: TextStyle(
+                  children: [
+                    const Icon(Icons.fastfood, size: 30),
+                    Text(
+                        (userData.isEmpty)
+                            ? "Hello User!"
+                            : "Hello " + userData[0]['fullName'] + " !",
+                        style: const TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.bold,
                         )),
-                    Icon(Icons.notifications_active_outlined, size: 30),
+                    const Icon(Icons.notifications_active_outlined, size: 30),
                   ],
                 ),
               ),
               Row(
                 children: [
                   Container(
-                    margin: const EdgeInsets.only(left: 10, top: 20),
-                    width: MediaQuery.of(context).size.width * .95,
-                    height: MediaQuery.of(context).size.height * 0.25,
-                    decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(20))),
-                    child: Image.asset(
-                      'assets/img/burger.png',
-                      width:56,
-                      height:56,
-                    )
-                  )
+                      margin: const EdgeInsets.only(left: 10, top: 20),
+                      width: MediaQuery.of(context).size.width * .95,
+                      height: MediaQuery.of(context).size.height * 0.25,
+                      decoration: const BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(20))),
+                      child: Image.asset(
+                        'assets/img/burger.png',
+                        width: 56,
+                        height: 56,
+                      ))
                 ],
               ),
               Padding(
@@ -72,26 +123,36 @@ class _FeedState extends State<Feed> {
                           ),
                           onPressed: () {
                             Navigator.push(
-                            context, MaterialPageRoute(builder: (context) => const Restaurants()));
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        Restaurants(restaurantData)));
                           },
                           child: const Text('See all'),
                         )
                       ],
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top:40.0,),
+                      padding: const EdgeInsets.only(
+                        top: 40.0,
+                      ),
                       child: Container(
                         height: MediaQuery.of(context).size.height * .20,
-                        child: ListView(
-                          scrollDirection: Axis.horizontal,
-                          shrinkWrap: true,
-                          children: [
-                            restaurantCard('Vine',4.0),
-                            restaurantCard('Bondia',3.0),
-                            restaurantCard('Skybar',2.0),
-                            restaurantCard('Skybar',2.0),
-                          ],
-                        ),
+                        child: (restaurantData.isEmpty)
+                            ? const Padding(
+                                padding: EdgeInsets.only(top: 40.0),
+                                child: Text("No Restaurants Available"),
+                              )
+                            : ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                shrinkWrap: true,
+                                itemCount: restaurantData.length,
+                                itemBuilder: (context, index) {
+                                  return restaurantCard(
+                                      restaurantData[index]['name'],
+                                      restaurantData[index]['ratings'],
+                                      restaurantData[index]['image']);
+                                }),
                       ),
                     ),
                   ],
@@ -117,61 +178,48 @@ class _FeedState extends State<Feed> {
                           ),
                           onPressed: () {
                             Navigator.push(
-                            context, MaterialPageRoute(builder: (context) => const Menu()));
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const Menu()));
                           },
                           child: const Text('See all'),
                         )
                       ],
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top:40.0,),
+                      padding: const EdgeInsets.only(
+                        top: 40.0,
+                      ),
                       child: SingleChildScrollView(
-                        child: Column( 
-                          children:  [
-                              ListTile(
-                                leading: 
-                                  Image.network(
-                                    'https://www.seekapor.com/wp-content/uploads/2018/08/Konbini.com_.png',
-                                    width:56,
-                                    height:56,
-                                  ),
-                                title: Text('Jollof Rice'),
-                                subtitle: Text('Local Ghanaian Jollof Rice'),
-                                trailing:  Text('Ghc20.00'),
-                              ),
-                              ListTile(
-                                leading: 
-                                  Image.network(
-                                    'https://eatwellabi.com/wp-content/uploads/2021/09/Waakye-13-720x538.jpg',
-                                    width:56,
-                                    height:56,
-                                  ),
-                                title: Text('Waakye'),
-                                subtitle: Text('Hot fast foor for the morning'),
-                                trailing:  Text('Ghc25.00'),
-                              ),
-                              ListTile(
-                                leading: 
-                                  Image.network(
-                                    'https://img-global.cpcdn.com/recipes/5da646cc1c73a947/1200x630cq70/photo.jpg',
-                                    width:56,
-                                    height:56,
-                                  ),
-                                title: Text('Fried Rice'),
-                                subtitle: Text('Hot local Ghanaian fried you just need to have an awesome day!'),
-                                trailing:  Text('Ghc25.00'),
-                              ),
-                              ListTile(
-                                leading: 
-                                  Image.network(
-                                    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSybQ7SfSQ8V5RCY_eTVz6M0yONf1AZUKbbuA&usqp=CAU',
-                                    width:56,
-                                    height:56,
-                                  ),
-                                title: Text('Assorted Rice'),
-                                subtitle: Text(' Ghanaian Assorted Rice you need to try!'),
-                                trailing:  Text('Gh30.00'),
-                              ),
+                        child: Column(
+                          children: [
+                            (menuData.isEmpty)
+                                ? const Padding(
+                                    padding: EdgeInsets.only(top: 40.0),
+                                    child: Text("No Menu Available"),
+                                  )
+                                : const Text(""),
+                            ListView.builder(
+                                physics: NeverScrollableScrollPhysics(),
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                                itemCount: menuData.length,
+                                itemBuilder: (context, index) {
+                                  return ListTile(
+                                    leading: Container(
+                                      child: Image.network(
+                                        menuData[index]['image'],
+                                        width: 56,
+                                        height: 56,
+                                        fit: BoxFit.fill,
+                                      ),
+                                    ),
+                                    title: Text(menuData[index]['name']),
+                                    subtitle:
+                                        Text(menuData[index]['description']),
+                                    trailing: Text(menuData[index]['price']),
+                                  );
+                                }),
                           ],
                         ),
                       ),
