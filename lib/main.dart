@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:foodpedia/view/splash_screen.dart';
+import 'package:foodpedia/view/subpages/menu_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,10 +15,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Foodpedia',
-      debugShowCheckedModeBanner: false,
-      home:  Splash(),
-    );
+        title: 'Foodpedia',
+        debugShowCheckedModeBanner: false,
+        home: Splash(),
+        routes: {
+          '/menu': (context) =>  MenuView(),
+        }
+      );
   }
 }
 

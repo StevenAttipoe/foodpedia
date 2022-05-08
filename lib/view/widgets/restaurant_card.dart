@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 
 Widget restaurantCard(String name, String rating,String imageURL) {
@@ -28,23 +27,6 @@ Widget restaurantCard(String name, String rating,String imageURL) {
                     fontWeight: FontWeight.bold,
                 )
               ),
-
-              RatingBar.builder(
-                initialRating: double.parse(rating),
-                minRating: 1,
-                direction: Axis.horizontal,
-                allowHalfRating: true,
-                itemCount: 5,
-                itemSize: 25,
-                itemPadding: const EdgeInsets.symmetric(horizontal: 1.0),
-                itemBuilder: (context, _) =>  const Icon(
-                  Icons.star,
-                  color: Colors.amber,
-                ),
-                onRatingUpdate: (rating) {
-                  print(rating);
-                },
-              )
             ],
           ),
         );

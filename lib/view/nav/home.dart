@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:foodpedia/view/nav/map.dart';
+import 'package:foodpedia/view/nav/book.dart';
 import 'package:foodpedia/view/nav/profile.dart';
 import 'package:foodpedia/view/nav/search.dart';
 import 'package:foodpedia/view/nav/feed.dart';
@@ -36,10 +36,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  List<Widget> _widgetOptions = <Widget>[
+  final List<Widget> _widgetOptions = const  <Widget>[
     Feed(),
     SearchPage(),
-    MapPage(),
+    Book(),
     ProfilePage(),
   ];
 
@@ -59,7 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
           break;
         case 2:
           {
-            _appBar = 'Map';
+            _appBar = 'Book';
           }
           break;
         case 3:
@@ -74,9 +74,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text(_appBar),
-      // ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
@@ -98,9 +95,9 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.map_outlined,
+              Icons.book,
             ),
-            label: 'Chat',
+            label: 'Book',
             backgroundColor: Colors.blueGrey,
           ),
           BottomNavigationBarItem(

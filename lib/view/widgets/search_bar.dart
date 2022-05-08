@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:foodpedia/model/menu.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 class SearchBar extends StatefulWidget {
   const SearchBar({ Key? key }) : super(key: key);

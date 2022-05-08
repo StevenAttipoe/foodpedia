@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:foodpedia/view/subpages/menu_view.dart';
 import 'package:foodpedia/view/widgets/search_bar.dart';
 
 
@@ -86,20 +87,35 @@ class _MenuState extends State<Menu> {
                           return menuData[index]['name']
                             .toLowerCase()
                             .contains(searchString)
-                          ? ListTile(
-                            leading: Container(
-                              child: Image.network(
-                                menuData[index]['image'],
-                                width: 56,
-                                height: 56,
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                            title: Text(menuData[index]['name']),
-                            subtitle:
-                                Text(menuData[index]['description']),
-                            trailing: Text(menuData[index]['price']),
-                          ): Text("");
+                          ?  GestureDetector(
+                                    onTap: () {
+                                      Navigator.pushNamed(context, '/menu',
+                                        arguments: 
+                                          OneProject(
+                                            menuData[index]['name'].toString(),
+                                            menuData[index]['description'].toString(),
+                                            menuData[index]['phone'].toString(),
+                                            menuData[index]['price'].toString(),
+                                            menuData[index]['image'].toString()
+                                          )
+                                      );
+                                    },
+                                    child: ListTile(
+                                      leading: Container(
+                                        child: Image.network(
+                                          menuData[index]['image'],
+                                          width: 56,
+                                          height: 56,
+                                          fit: BoxFit.fill,
+                                        ),
+                                      ),
+                                      title: Text(menuData[index]['name']),
+                                      subtitle:
+                                          Text(menuData[index]['description']),
+                                      trailing: Text(menuData[index]['price']),
+                                    ),
+                                  )
+                                  : Text("");
                         }),
                   ],
                 ),

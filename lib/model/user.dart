@@ -18,3 +18,19 @@ Future<void> userSetup(
     });
     return;
 }
+
+Future<void> reserverRestaurant(String time, String date,String name) async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    String uid = auth.currentUser!.uid.toString();
+    CollectionReference users = FirebaseFirestore.instance
+      .collection('users')
+      .doc(uid)
+      .collection('reserve');
+
+    users.add({
+      'name': name,
+      'time': time,
+      'date': date,
+    });
+    return;
+}
