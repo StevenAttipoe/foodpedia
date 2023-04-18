@@ -16,3 +16,11 @@ Run the app: flutter run
 Note: You will need to obtain an API key from Google Places API to be able to fetch restaurant details.
 
 Screenshots
+![Screenshot1](./assets/img/f1.png)
+
+![Screenshot2](./assets/img/f2.png)
+
+![Screenshot3](./assets/img/f3.png)
+
+![Screenshot4](./assets/img/f4.png)
+
