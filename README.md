@@ -7,6 +7,14 @@ Search - Users can search for restaurants by name, location, or cuisine, making 
 Bookmarks - Users can bookmark their favorite restaurants and dishes, making it easy to revisit them at a later time.
 Reservation - The app allows users to make reservation before hand
 
+## Screenshots
+![Screenshot1](./assets/img/f1.png)
+
+![Screenshot2](./assets/img/f2.png)
+
+![Screenshot3](./assets/img/f3.png)
+
+
 ## Getting Started
 To get started with the Foodpedia food recommendation app, follow these steps:
 
@@ -14,13 +22,3 @@ Clone the repository
 Install the required dependencies: flutter pub get
 Run the app: flutter run
 Note: You will need to obtain an API key from Google Places API to be able to fetch restaurant details.
-
-Screenshots
-![Screenshot1](./assets/img/f1.png)
-
-![Screenshot2](./assets/img/f2.png)
-
-![Screenshot3](./assets/img/f3.png)
-
-![Screenshot4](./assets/img/f4.png)
-
